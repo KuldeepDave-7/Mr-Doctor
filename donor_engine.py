@@ -32,16 +32,18 @@ class MatchingEngine:
         # Convert the resulting DataFrame back into a standard list of dictionaries 
         return eligible.to_dict(orient='records')
 
-
-# --- Testing the Engine ---
 if __name__ == "__main__":
-    # Initialize the engine (Loads the CSV)
-    engine = MatchingEngine("data.csv")
+    # 1. Put your Render PostgreSQL URL here
+    DB_URL = "postgresql://triage_db_i5sf_user:Um5MLaKyiwkE6Vd4wNWFQOTv1t6nOUhV@dpg-d8kpgjegvqtc73fm34b0-a.oregon-postgres.render.com/triage_db_i5sf"
+    
+    # 2. Initialize the engine with the database
+    engine = MatchingEngine(DB_URL)
     
     print("Searching for B+ Donors...")
-    # Run the search
+    # 3. Run the search
     results = engine.find_optimal_donors("B+")
-    print(results)
-    # Display results
+    
+    # 4. Display results
     for rank, donor in enumerate(results, start=1):
-        print(f"Match {rank}: {donor['name']} ({donor['blood_group']}) - Last donated {donor['days_since_donation']} days ago.")     
+        # Note: Make sure the dictionary keys match your database column names exactly!
+        print(f"Match {rank}: {donor['name']} ({donor['blood_group']}) - Last donated {donor['days_since_donation']} days ago.")
