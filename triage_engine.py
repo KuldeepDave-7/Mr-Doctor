@@ -51,7 +51,7 @@ class TriageEngine:
         
         return predicted_disease, triage_advice.get(predicted_disease)
 
-# --- Test the Triage Logic ---
+
 if __name__ == "__main__":
     engine = TriageEngine()
 
