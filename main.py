@@ -9,8 +9,8 @@ from triage_engine import TriageEngine
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Initialize both engines exactly once when the server starts
-donor_engine = MatchingEngine("donors.csv")
+DB_URL = "postgresql://triage_db_i5sf_user:Um5MLaKyiwkE6Vd4wNWFQOTv1t6nOUhV@dpg-d8kpgjegvqtc73fm34b0-a.oregon-postgres.render.com/triage_db_i5sf"
+donor_engine = MatchingEngine(DB_URL)
 triage_engine = TriageEngine()
 
 @app.get("/", response_class=HTMLResponse)

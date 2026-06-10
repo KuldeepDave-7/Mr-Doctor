@@ -1,10 +1,13 @@
 import pandas as pd
+from sqlalchemy import create_engine
 
 class MatchingEngine:
-    def __init__(self, database_filepath):
+    def __init__(self, db_url):
         # 1. Load the database into a Pandas DataFrame when the engine starts
-        self.db = pd.read_csv(database_filepath)
-        
+
+        self.db_engine = create_engine(db_url)
+        self.donor_data = pd.read_sql("SELECT * FROM donors_table", self.db_engine)
+
         # 2. Define the medical rules as a class attribute
         self.compatibility_rules = {
             "B+": ["B+", "B-", "O+", "O-"],
@@ -48,4 +51,4 @@ if __name__ == "__main__":
     print(results)
     # Display results
     for rank, donor in enumerate(results, start=1):
-        print(f"Match {rank}: {donor['name']} ({donor['blood_group']}) - Last donated {donor['days_since_donation']} days ago.")
+        print(f"Match {rank}: {donor['name']} ({donor['blood_group']}) - Last donated {donor['days_since_donation']} days ago.")     
